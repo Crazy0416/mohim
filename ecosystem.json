@@ -1,13 +1,16 @@
 {
 	"apps": [{
-	"name": "myExpressGenerator",
-	"script": "bin/www",
-	"watch": false,
-	"env": {
-		"NODE_ENV": "dev"
-	},
-	"args": [
-		"--color"
-	]
-}]
+		"name": "myExpressGenerator",
+		"script": "bin/www",
+		"watch": false,
+		"env": {
+			"NODE_ENV": "dev"
+		},
+		"env_prod": {
+			"NODE_ENV": "prod"
+		},
+		"args": [
+			"--color"
+		]
+	}]
 }
