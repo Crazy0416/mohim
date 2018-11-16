@@ -1,0 +1,13 @@
+{
+	"apps": [{
+	"name": "myExpressGenerator",
+	"script": "bin/www",
+	"watch": false,
+	"env": {
+		"NODE_ENV": "dev"
+	},
+	"args": [
+		"--color"
+	]
+}]
+}
