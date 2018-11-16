@@ -26,7 +26,7 @@ if(process.env.NODE_ENV === "dev") {
 		"HOST": 'localhost'
 	};
 	config.server = {
-		PORT: 8080
+		PORT: 5900
 	}
 }
 
