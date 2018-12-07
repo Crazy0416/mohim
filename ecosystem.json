@@ -1,6 +1,6 @@
 {
 	"apps": [{
-		"name": "myExpressGenerator",
+		"name": "mohim",
 		"script": "bin/www",
 		"watch": false,
 		"env": {
