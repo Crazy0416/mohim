@@ -19,7 +19,12 @@ exports.register = async(req, res, next) => {
 
     logger.debug("register: rows: %o", rows);
 
-    res.send("test");
+    res.json({
+	    "message": "회원가입 완료.",
+	    "code": 200,
+	    "time": new Date(),
+	    "data": rows[0]
+    });
 };
 
 exports.login = async(req, res, next) => {
@@ -38,7 +43,7 @@ exports.login = async(req, res, next) => {
 	}
 
 	res.json({
-        "message": "로그인 됐습니다.",
+        "message": "로그인 완료.",
         "code": 200,
         "time": new Date(),
         "data": rows[0]
