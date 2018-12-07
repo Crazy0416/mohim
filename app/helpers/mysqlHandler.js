@@ -52,7 +52,7 @@ async function init() {
 		pwd VARCHAR(16) NOT NULL,
 		cyber_money INT(11) NOT NULL default '0',
 		PRIMARY KEY (email)
-	);`;
+	)CHARACTER SET utf8 COLLATE utf8_general_ci;`;
 	let result = await createTable(config.mysql.DATABASE, "User", createUesrTableSql);
 	if(result !== true) throw result;
 
@@ -64,7 +64,7 @@ async function init() {
 		penalty INT(11) NOT NULL default '0',
 		PRIMARY KEY (club_name),
 		FOREIGN KEY (u_email) REFERENCES User (email)
-	);`;
+	)CHARACTER SET utf8 COLLATE utf8_general_ci;`;
 
 	result = await createTable(config.mysql.DATABASE, "Club", createClubTableSql);
 	if(result !== true) throw result;
@@ -77,7 +77,7 @@ async function init() {
 		code VARCHAR(20) NOT NULL,
 		PRIMARY KEY (_id),
 		FOREIGN KEY (c_club_name) REFERENCES Club (club_name)
-	);`;
+	)CHARACTER SET utf8 COLLATE utf8_general_ci;`;
 
 	result = await createTable(config.mysql.DATABASE, "Attend", createAttendTableSql);
 	if(result !== true) throw result;
@@ -89,7 +89,7 @@ async function init() {
 		content VARCHAR(100),
 		PRIMARY KEY (_id),
 		FOREIGN KEY (c_club_name) REFERENCES Club (club_name)
-	);`;
+	)CHARACTER SET utf8 COLLATE utf8_general_ci;`;
 
 	result = await createTable(config.mysql.DATABASE, "Notice", createNoticeTableSql);
 	if(result !== true) throw result;
@@ -100,7 +100,7 @@ async function init() {
 		PRIMARY KEY (c_club_name, u_email),
 		FOREIGN KEY (c_club_name) REFERENCES Club (club_name),
 		FOREIGN KEY (u_email) REFERENCES User (email)
-	);`;
+	)CHARACTER SET utf8 COLLATE utf8_general_ci;`;
 
 	result = await createTable(config.mysql.DATABASE, "ClubMembers", createClubMembersTableSql);
 	if(result !== true) throw result;
