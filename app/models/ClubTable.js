@@ -14,6 +14,25 @@ module.exports = {
 
 		const connection = await poolCon.getConnection();
 		await connection.beginTransaction();
+
+		try {
+			[rows,fields] = await connection.execute(
+				`SELECT *
+				FROM Club 
+				WHERE club_name=?`, [dataObj.clubName]);
+		} catch (err) {
+			err.myMessage = "서버 오류. 클럽 생성 실패";
+			await connection.rollback(); await connection.release(); throw err;
+		}
+		logger.debug("makeNewClub 클럽 검색 결과: %o", rows);
+
+		if(rows.length !== undefined && rows.length > 0) {
+			let err = new Error("존재하는 클럽 이름입니다.");
+			err.code = 400;
+			await connection.release();
+			throw err;
+		}
+
 		try {
 			[rows,fields] = await connection.execute(
 				`INSERT INTO Club (club_name, club_info, u_email) 
