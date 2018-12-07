@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const member = require('../models/UserSchema');
+const member = require('../models/UserTable');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

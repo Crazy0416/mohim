@@ -1,6 +1,6 @@
 'use strict';
 
-const UserSchema = require('../models/UserSchema');
+const UserSchema = require('../models/UserTable');
 const to = require('await-to-js').default;
 
 exports.register = async(req, res, next) => {
