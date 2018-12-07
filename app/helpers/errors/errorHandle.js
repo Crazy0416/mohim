@@ -7,5 +7,9 @@ module.exports = function (err, req, res, next) {
 
     // render the error page
     res.status(err.status || 500);
-    res.render('error');
+    res.json({
+        "message": err.myMessage || err.message,
+        "code": err.code || res.statusCode,
+        "time": new Date()
+    })
 };
