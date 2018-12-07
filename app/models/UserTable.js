@@ -5,8 +5,10 @@ const poolCon = require('../helpers/mysqlHandler');
 
 module.exports = {
 	register: async function(dataObj) {
-		if(!(dataObj && dataObj.name && dataObj.email && dataObj.password))
-			throw new Error("잘못된 입력입니다.");
+		if(!(dataObj && dataObj.name && dataObj.email && dataObj.password)){
+			let err = new Error("잘못된 입력입니다."); err.myMessage="잘못된 입력입니다.";
+			logger.error("register: 잘못된 입력입니다. 입력값: %o", dataObj);  throw err;
+		}
 
 		let [rows,fields] = [null, null];
 
@@ -27,8 +29,10 @@ module.exports = {
 		return [rows, fields];
 	},
 	login: async function(dataObj) {
-		if(!(dataObj && dataObj.email && dataObj.password))
-			throw new Error("잘못된 입력입니다.");
+		if(!(dataObj && dataObj.email && dataObj.password)) {
+			let err = new Error("잘못된 입력입니다."); err.myMessage="잘못된 입력입니다.";
+			logger.error("login: 잘못된 입력입니다. 입력값: %o", dataObj);  throw err;
+		}
 
 		let [rows,fields] = [null, null];
 

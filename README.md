@@ -1,0 +1,3 @@
+- mysql 5.7 설치
+- create database mohin;
+- mysql password는 config/config.json에 설정됨
