@@ -4,7 +4,7 @@ const wrap = require('express-async-wrap');
 
 const UserCtrl = require('../controllers/UserCtrl');
 
-router.route('/users/register')
+router.route('/register')
 	.post(wrap(UserCtrl.register)); // 회원가입
 
 module.exports = router;
