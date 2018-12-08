@@ -2,8 +2,12 @@
 
 const to = require('await-to-js').default;
 const poolCon = require('../helpers/mysqlHandler');
+const ClubMembersTable = require('./ClubMembersTable');
 
 module.exports = {
+	selectClubByClubNameSQL: `SELECT * FROM Club WHERE club_name=?`,
+	makeNewClubSQL: `INSERT INTO Club (club_name, club_info, u_email) 
+				VALUES (?, ?, ?)`,
 	makeNewClub: async function(dataObj) {
 		if(!(dataObj && dataObj.user instanceof Object && dataObj.user.email && dataObj.clubName && dataObj.clubInfo)) {
 			let err = new Error("잘못된 입력입니다."); err.myMessage="잘못된 입력입니다.";
@@ -16,10 +20,7 @@ module.exports = {
 		await connection.beginTransaction();
 
 		try {   // club_name 존재 검색
-			[rows,fields] = await connection.execute(
-				`SELECT *
-				FROM Club 
-				WHERE club_name=?`, [dataObj.clubName]);
+			[rows,fields] = await connection.execute(this.selectClubByClubNameSQL, [dataObj.clubName]);
 		} catch (err) {
 			err.myMessage = "서버 오류. 클럽 생성 실패";
 			await connection.rollback(); await connection.release(); throw err;
@@ -34,9 +35,7 @@ module.exports = {
 		}
 
 		try {   // 새 Club 생성
-			[rows,fields] = await connection.execute(
-				`INSERT INTO Club (club_name, club_info, u_email) 
-				VALUES (?, ?, ?)`, [dataObj.clubName, dataObj.clubInfo, dataObj.user.email]);
+			[rows,fields] = await connection.execute(this.makeNewClubSQL, [dataObj.clubName, dataObj.clubInfo, dataObj.user.email]);
 		} catch(err) {
 			err.myMessage = "서버 오류. 클럽 생성 실패";
 			await connection.rollback(); await connection.release(); throw err;
@@ -44,9 +43,7 @@ module.exports = {
 		logger.debug("새 클럽 만들기 결과: %o", rows);
 
 		try {   // ClubMembers에 추가.
-			[rows,fields] = await connection.execute(
-				`INSERT INTO ClubMembers (c_club_name, u_email) 
-				VALUES (?, ?)`, [dataObj.clubName, dataObj.user.email]);
+			[rows,fields] = await connection.execute(ClubMembersTable.addClubMemberSQL, [dataObj.clubName, dataObj.user.email]);
 		} catch(err) {
 			err.myMessage = "서버 오류. 클럽 생성 실패";
 			await connection.rollback(); await connection.release(); throw err;
@@ -70,6 +67,7 @@ module.exports = {
 
 		try {
 			// TODO: Club 생성일을 만들 것인가? 아니면 검색어를 무조건 입력하도록 할까??
+			// TODO: this 객체에 SQL 프로퍼티 만들기.
 			[rows,fields] = await connection.execute(
 				`SELECT *
 				FROM Club 
