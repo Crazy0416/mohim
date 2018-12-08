@@ -46,14 +46,14 @@ async function createTable(dbName, tableName, tableSchemaSql) {
 }
 
 async function init() {
-	const createUesrTableSql = `CREATE TABLE User (
+	const createUserTableSql = `CREATE TABLE User (
 		email VARCHAR(30) NOT NULL,
 		uname VARCHAR(10) NOT NULL,
 		pwd VARCHAR(16) NOT NULL,
 		cyber_money INT(11) NOT NULL default '0',
 		PRIMARY KEY (email)
 	)CHARACTER SET utf8 COLLATE utf8_general_ci;`;
-	let result = await createTable(config.mysql.DATABASE, "User", createUesrTableSql);
+	let result = await createTable(config.mysql.DATABASE, "User", createUserTableSql);
 	if(result !== true) throw result;
 
 	const createClubTableSql = `CREATE TABLE Club (
