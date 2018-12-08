@@ -25,14 +25,14 @@ exports.makeNewClub = async(req, res, next) => {
 	});
 };
 
-exports.viewClubList = async (req, res, next) => {
+exports.viewClubAllList = async (req, res, next) => {
 	let [rows, fields] = [null, null];
 	let dataObj = {
 		page: req.params.page || 0
 	};
 
 	try {
-		[rows, fields] = await ClubTable.viewClubList(dataObj);
+		[rows, fields] = await ClubTable.viewClubAllList(dataObj);
 	} catch (err) {
 		logger.error("viewClubList 실패: %o", err); throw err;
 	}
