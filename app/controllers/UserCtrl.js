@@ -49,3 +49,25 @@ exports.login = async(req, res, next) => {
         "data": rows[0]
     });
 };
+
+exports.viewUserClubList = async function (req, res, next) {
+	let [rows, fields] = [null, null];
+	let dataObj = {
+		user: req.body.user
+	};
+
+	logger.debug("가입된 클럽 목록 입력값: %o", dataObj);
+
+	try {
+		[rows, fields] = await UserSchema.viewUserClubList(dataObj);
+	} catch (err) {
+		logger.error("서버 오류. 가입된 클럽 목록 가져오기 실패: %o", err); throw err;
+	}
+
+	res.json({
+		"message": " 가입된 클럽 목록 가져오기 완료.",
+		"code": 200,
+		"time": new Date(),
+		"data": rows
+	});
+};
