@@ -60,7 +60,7 @@ async function init() {
 		club_name VARCHAR(30) NOT NULL,
 		club_info VARCHAR(100),
 		u_email VARCHAR(30) NOT NULL,
-		user_count INT(11) unsigned NOT NULL default '0',
+		user_count INT(11) unsigned NOT NULL default '1',
 		penalty INT(11) NOT NULL default '0',
 		PRIMARY KEY (club_name),
 		FOREIGN KEY (u_email) REFERENCES User (email)
