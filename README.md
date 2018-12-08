@@ -8,7 +8,8 @@
 - POST http://1.201.139.81:5900/users/register
 - http header: Content-Type=application/json
 ```
-http body: {
+// http body
+{
 	"email":  <텍스트 값>,
 	"name": <텍스트 값>,
 	"password": <텍스트 값>
@@ -19,7 +20,8 @@ http body: {
 - POST http://1.201.139.81:5900/users/login
 - http header: Content-Type=application/json
 ```
-http body: {
+// http body
+{
 	"email":  <텍스트 값>,
 	"password": <텍스트 값>
 }
@@ -29,7 +31,8 @@ http body: {
 - POST http://1.201.139.81:5900/clubs/make
 - http header: Content-Type=application/json
 ```$xslt
-http body: {
+// http body
+{
 	"user": {
         "email": "minmin0416@naver.com",
         "uname": "minho",
@@ -49,6 +52,7 @@ http body: {
 - PUT http://1.201.139.81:5900/clubmembers/add
 - http header: Content-Type=application/json
 ```$xslt
+// http body
 {
 	"user": {
         "email": "gogomin0416@gmail.com",
@@ -57,5 +61,20 @@ http body: {
         "cyber_money": 0
     },
     "clubName": "클럽1"
+}
+```
+*****
+### 가입된 클럽 목록
+- GET http://1.201.139.81:5900/users/clubs
+- http header: Content-Type=application/json
+```$xslt
+// http body
+{
+	"user": {
+        "email": "gogomin0416@gmail.com",
+        "uname": "zxc",
+        "pwd": "asd",
+        "cyber_money": 0
+    }
 }
 ```
