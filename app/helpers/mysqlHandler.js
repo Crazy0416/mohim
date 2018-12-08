@@ -74,6 +74,7 @@ async function init() {
 		c_club_name VARCHAR(30) NOT NULL,
 		title VARCHAR(30) NOT NULL, 
 		deadline DATE NOT NULL,
+		create_on DATETIME NOT NULL DEFAULT NOW(),
 		code VARCHAR(20) NOT NULL,
 		PRIMARY KEY (_id),
 		FOREIGN KEY (c_club_name) REFERENCES Club (club_name)
@@ -86,6 +87,7 @@ async function init() {
 		_id BIGINT(20) unsigned NOT NULL AUTO_INCREMENT,
 		c_club_name VARCHAR(30) NOT NULL,
 		title VARCHAR(30) NOT NULL, 
+		create_on DATETIME NOT NULL DEFAULT NOW(),
 		content VARCHAR(100),
 		PRIMARY KEY (_id),
 		FOREIGN KEY (c_club_name) REFERENCES Club (club_name)
@@ -103,6 +105,21 @@ async function init() {
 	)CHARACTER SET utf8 COLLATE utf8_general_ci;`;
 
 	result = await createTable(config.mysql.DATABASE, "ClubMembers", createClubMembersTableSql);
+	if(result !== true) throw result;
+
+	const createPenaltyLogTableSql = `CREATE TABLE PenaltyLog (
+		_id BIGINT(20) unsigned NOT NULL AUTO_INCREMENT,
+		c_club_name VARCHAR(30) NOT NULL,
+		u_email VARCHAR(30) NOT NULL,
+		create_on DATETIME NOT NULL DEFAULT NOW(),
+		penalty INT(10) NOT NULL,
+		PRIMARY KEY (_id),
+		FOREIGN KEY (c_club_name) REFERENCES Club (club_name),
+		FOREIGN KEY (u_email) REFERENCES User (email),
+		INDEX userLog (u_email)
+	)CHARACTER SET utf8 COLLATE utf8_general_ci;`;
+
+	result = await createTable(config.mysql.DATABASE, "PenaltyLog", createPenaltyLogTableSql);
 	if(result !== true) throw result;
 }
 init();
