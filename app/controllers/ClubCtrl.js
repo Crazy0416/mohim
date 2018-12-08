@@ -24,3 +24,23 @@ exports.makeNewClub = async(req, res, next) => {
 		"data": rows[0]
 	});
 };
+
+exports.viewClubList = async (req, res, next) => {
+	let [rows, fields] = [null, null];
+	let dataObj = {
+		page: req.params.page || 0
+	};
+
+	try {
+		[rows, fields] = await ClubTable.viewClubList(dataObj);
+	} catch (err) {
+		logger.error("viewClubList 실패: %o", err); throw err;
+	}
+
+	res.json({
+		"message": "클럽 목록 검색 완료.",
+		"code": 200,
+		"time": new Date(),
+		"data": rows
+	});
+};
