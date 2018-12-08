@@ -1,13 +1,11 @@
 'use strict';
 
-const to = require('await-to-js').default;
 const poolCon = require('../helpers/mysqlHandler');
 const ClubMembersTable = require('./ClubMembersTable');
 
 module.exports = {
 	selectClubByClubNameSQL: `SELECT * FROM Club WHERE club_name=?`,
-	makeNewClubSQL: `INSERT INTO Club (club_name, club_info, u_email) 
-				VALUES (?, ?, ?)`,
+	makeNewClubSQL: `INSERT INTO Club (club_name, club_info, u_email) VALUES (?, ?, ?)`,
 	makeNewClub: async function(dataObj) {
 		if(!(dataObj && dataObj.user instanceof Object && dataObj.user.email && dataObj.clubName && dataObj.clubInfo)) {
 			let err = new Error("잘못된 입력입니다."); err.myMessage="잘못된 입력입니다.";

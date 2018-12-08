@@ -10,6 +10,7 @@ const errorHandle = require('./app/helpers/errors/errorHandle');
 const indexRouter = require('./app/routes/index');
 const usersRouter = require('./app/routes/userRouter');
 const clubRouter = require('./app/routes/clubRouter');
+const clubMembersRouter = require('./app/routes/clubMembersRouter');
 
 
 const app = express();
@@ -35,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/clubs', clubRouter);
+app.use('/clubmembers', clubMembersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
