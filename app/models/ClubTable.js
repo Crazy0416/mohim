@@ -72,6 +72,9 @@ module.exports = {
 		}
 		logger.debug("viewClubList 클럽 검색 결과: %o", rows);
 
+		await connection.commit();
+		await connection.release();
+
 		return [rows, fields];
 	}
 };
