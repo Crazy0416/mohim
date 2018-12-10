@@ -13,5 +13,8 @@ router.route('/login')
 router.route('/clubs')
 	.post(wrap(UserCtrl.viewUserClubList));    // 가입된 클럽 목록 가져오기
 
+router.route('/cyberMoney')
+	.put(wrap(UserCtrl.chargeCyberMoney));    // 가입된 클럽 목록 가져오기
+
 
 module.exports = router;

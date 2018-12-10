@@ -78,3 +78,20 @@
 	}
 }
 ```
+*****
+### 사이버머니 충전
+- PUT http://1.201.139.81:5900/users/cyberMoney
+- http header: Content-Type=application/json
+```$xslt
+// http body
+{
+	"user": {
+		"email": "gogomin0416@gmail.com",
+		"uname": "zxc",
+		"pwd": "asd",
+		"cyber_money": 0
+	},
+	"chargeMoney": 10000
+}
+```
+- 주의: chargeMoney 값이 0 이하이면 오류처리

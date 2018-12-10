@@ -71,3 +71,25 @@ exports.viewUserClubList = async function (req, res, next) {
 		"data": rows
 	});
 };
+
+exports.chargeCyberMoney = async (req, res, next) => {
+	let [rows, fields] = [null, null];
+	let dataObj = {
+		user: req.body.user,
+		chargeMoney: req.body.chargeMoney
+	};
+	logger.debug("유저 사이버머니 충전 입력값: %o", dataObj);
+
+	try {
+		[rows, fields] = await UserSchema.chargeCyberMoney(dataObj);
+	} catch (err) {
+		logger.error("서버 오류. 가입된 클럽 목록 가져오기 실패: %o", err); throw err;
+	}
+
+	res.json({
+		"message": "사이버 머니 충전완료.",
+		"code": 200,
+		"time": new Date(),
+		"data": rows
+	});
+};
