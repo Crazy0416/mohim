@@ -14,6 +14,7 @@
     "express": "~4.16.0",
     "express-async-wrap": "^1.0.0",
     "http-errors": "~1.6.2",
+    "moment": "^2.22.2",
     "mysql2": "^1.6.4",
     "winston": "^3.0.0"
   }
