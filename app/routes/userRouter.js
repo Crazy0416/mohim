@@ -11,7 +11,7 @@ router.route('/login')
 	.post(wrap(UserCtrl.login));    // 로그인
 
 router.route('/clubs')
-	.get(wrap(UserCtrl.viewUserClubList));    // 가입된 클럽 목록 가져오기
+	.post(wrap(UserCtrl.viewUserClubList));    // 가입된 클럽 목록 가져오기
 
 
 module.exports = router;

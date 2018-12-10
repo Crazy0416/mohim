@@ -71,10 +71,10 @@
 // http body
 {
 	"user": {
-        "email": "gogomin0416@gmail.com",
-        "uname": "zxc",
-        "pwd": "asd",
-        "cyber_money": 0
-    }
+		"email": "gogomin0416@gmail.com",
+		"uname": "zxc",
+		"pwd": "asd",
+		"cyber_money": 0
+	}
 }
 ```
