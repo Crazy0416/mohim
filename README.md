@@ -95,3 +95,19 @@
 }
 ```
 - 주의: chargeMoney 값이 0 이하이면 오류처리
+```
+// http response 결과.
+{
+    "message": "사이버 머니 충전완료.",
+    "code": 200,
+    "time": "2018-12-10T12:50:38.257Z",
+    "data": [   // 충전한 뒤의 유저 정보
+        {
+            "email": "gogomin0416@gmail.com",
+            "uname": "gogo",
+            "pwd": "123",
+            "cyber_money": 10000
+        }
+    ]
+}
+```
