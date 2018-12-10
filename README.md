@@ -111,3 +111,45 @@
     ]
 }
 ```
+### 가입된 클럽 목록
+- GET http://1.201.139.81:5900/users/clubs
+- http header: Content-Type=application/json
+```$xslt
+// http body
+{
+	"user": {
+		"email": "gogomin0416@gmail.com",
+		"uname": "zxc",
+		"pwd": "asd",
+		"cyber_money": 0
+	}
+}
+```
+*****
+### 출석 생성
+- POST http://1.201.139.81:5900/users/attend/make
+- http header: Content-Type=application/json
+```$xslt
+// http body
+{
+	"user": {
+        "email": "gogomin0416@gmail.com",
+        "uname": "gogo",
+        "pwd": "123",
+        "cyber_money": 0
+    },
+    "clubName": "클럽1",
+    "title": "두번째 출석체크",
+    "deadline": "2018-12-25T14:00",
+    "code":"123"
+}
+```
+- 주의: deadline 값이 날짜 타입이 아니거나 방장이 아니면 오류처
+```
+// http response 결과.
+{
+    "message": "클럽이 없거나 권한이 없습니다.",
+    "code": 500,
+    "time": "2018-12-10T14:43:04.562Z"
+}
+```
