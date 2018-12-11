@@ -34,7 +34,7 @@ module.exports = {
 		}
 
 		try {
-			let createOn = moment(new Date()).format(config.DATE_FORMAT).toString();
+			let createOn = moment().format(config.DATE_FORMAT).toString();
 			[rows,fields] = await connection.execute(this.createNewAttendSQL,
 				[dataObj.clubName, dataObj.title, dataObj.content, createOn]);
 		} catch (err) {

@@ -14,6 +14,7 @@ module.exports = {
 	userReadAttendByAttendIdSQL: `UPDATE Attend SET unread_email_list=? WHERE _id=?`,
 	finePenaltyFromUserCyberMoneySQL: `UPDATE User SET cyber_money = cyber_money - ? WHERE email=?`,
 	addPenaltySQL: `UPDATE Club SET penalty = penalty + ? WHERE club_name = ?`,
+	addPenaltyLogSQL: `INSERT INTO PenaltyLog (c_club_name, u_email, create_on, penalty) VALUES (?,?,?,?)`,
 	makeNewAttend: async function(dataObj) {
 		if(!(dataObj && dataObj.user instanceof Object && dataObj.user.email && dataObj.title && dataObj.clubName && dataObj.deadline
 		&& moment(dataObj.deadline).isValid() && dataObj.code)) {
@@ -56,7 +57,7 @@ module.exports = {
 		logger.debug("makeNewAttend 클럽 멤버 unread_email_list: %s", unreadEmailList);
 
 		try {
-			let createOn = moment().format(config.DATE_FORMAT).toString();
+			let createOn = moment(new Date()).format(config.DATE_FORMAT).toString();
 			[rows,fields] = await connection.execute(this.createNewAttendSQL,
 				[dataObj.clubName, dataObj.title, dataObj.deadline.toString(), createOn, dataObj.code, unreadEmailList]);
 		} catch (err) {
@@ -213,6 +214,16 @@ module.exports = {
 			}
 			penaltyAmount += 1000;
 			logger.debug("finePenaltytoUnread 유저 벌금부과 업데이트 결과 검색 결과: %o", rows);
+			let createOn = moment(new Date()).format(config.DATE_FORMAT).toString();
+
+			try {
+				[rows,fields] = await connection.execute(this.addPenaltyLogSQL, [dataObj.clubName, uEmail,
+					createOn, 1000]);
+			} catch (err) {
+				err.myMessage = "서버 오류. 출석 벌금 로그 남기기 실패";
+				await connection.rollback(); await connection.release(); throw err;
+			}
+			logger.debug("finePenaltytoUnread 유저 벌금부과 로그 추가 결과: %o", rows);
 		}
 
 		try {
