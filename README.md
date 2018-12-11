@@ -126,7 +126,7 @@
 }
 ```
 *****
-### 출석 생성
+### 클럽이름으로 출석 리스트 검색 
 - POST http://1.201.139.81:5900/attend/search
 - http header: Content-Type=application/json
 ```$xslt
