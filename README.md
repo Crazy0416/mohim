@@ -250,3 +250,37 @@
     "time": "2018-12-11T13:33:43.447Z"
 }
 ```
+*****
+### 클럽 이름으로 공지 검색 
+- PUT http://1.201.139.81:5900/notice/search
+- http header: Content-Type=application/json
+```$xslt
+// http body
+{
+	"clubName": "클럽1"
+}
+```
+- 응답
+```
+{
+    "message": "공지 검색 완료.",
+    "code": 200,
+    "time": "2018-12-11T14:32:54.252Z",
+    "data": [
+        {
+            "_id": 1,
+            "c_club_name": "클럽1",
+            "title": "첫번째 공지사항",
+            "create_on": "2018-12-11T07:12:00.000Z",
+            "content": "이번 모임은 101 카페에서 할 예정입니다~~"
+        },
+        {
+            "_id": 2,
+            "c_club_name": "클럽1",
+            "title": "두번째 공지사항",
+            "create_on": "2018-12-11T08:12:00.000Z",
+            "content": "이번 모임은 다음주로 미뤄졌습니다!!"
+        }
+    ]
+}
+```

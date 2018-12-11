@@ -26,23 +26,23 @@ exports.makeNewNotice = async(req, res, next) => {
 		"data": rows
 	});
 };
-//
-// exports.searchAttendByClubName = async(req, res, next) => {
-// 	let [rows, fields] = [null, null];
-// 	let dataObj = {
-// 		clubName: req.body.clubName
-// 	};
-//
-// 	try {
-// 		[rows, fields] = await AttendTable.searchAttendByClubName(dataObj);
-// 	} catch (err) {
-// 		logger.error("searchAttendByClubName 실패: %o", err); throw err;
-// 	}
-//
-// 	res.json({
-// 		"message": "출석 검색 완료.",
-// 		"code": 200,
-// 		"time": new Date(),
-// 		"data": rows
-// 	});
-// };
+
+exports.searchNoticeByClubName = async(req, res, next) => {
+	let [rows, fields] = [null, null];
+	let dataObj = {
+		clubName: req.body.clubName
+	};
+
+	try {
+		[rows, fields] = await NoticeTable.searchNoticeByClubName(dataObj);
+	} catch (err) {
+		logger.error("searchNoticeByClubName 실패: %o", err); throw err;
+	}
+
+	res.json({
+		"message": "공지 검색 완료.",
+		"code": 200,
+		"time": new Date(),
+		"data": rows
+	});
+};
