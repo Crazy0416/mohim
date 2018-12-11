@@ -125,6 +125,33 @@
 	}
 }
 ```
+### 출석 생성
+- POST http://1.201.139.81:5900/users/attend/make
+- http header: Content-Type=application/json
+```$xslt
+// http body
+{
+	"user": {
+        "email": "gogomin0416@gmail.com",
+        "uname": "gogo",
+        "pwd": "123",
+        "cyber_money": 0
+    },
+    "clubName": "클럽1",
+    "title": "두번째 출석체크",
+    "deadline": "2018-12-25T14:00",
+    "code":"123"
+}
+```
+- 주의: deadline 값이 날짜 타입이 아니거나 방장이 아니면 오류처
+```
+// http response 결과.
+{
+    "message": "클럽이 없거나 권한이 없습니다.",
+    "code": 500,
+    "time": "2018-12-10T14:43:04.562Z"
+}
+```
 *****
 ### 클럽이름으로 출석 리스트 검색 
 - POST http://1.201.139.81:5900/attend/search
@@ -133,5 +160,31 @@
 // http body
 {
     "clubName": "클럽1"
+}
+```
+### 공지 생성
+- POST http://1.201.139.81:5900/users/notice/make
+- http header: Content-Type=application/json
+```$xslt
+// http body
+{
+	"user": {
+        "email": "gogomin0416@gmail.com",
+        "uname": "gogo",
+        "pwd": "123",
+        "cyber_money": 0
+    },
+    "clubName": "클럽1",
+    "title": "첫번째 공지사항",
+    "content": "이번 모임은 101 카페에서 할 예정입니다~~"
+}
+```
+- 주의: 클럽의 방장이 아니면 오류처리
+```
+// http response 결과.
+{
+    "message": "클럽이 없거나 권한이 없습니다.",
+    "code": 500,
+    "time": "2018-12-10T14:43:04.562Z"
 }
 ```

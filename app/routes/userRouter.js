@@ -4,6 +4,7 @@ const wrap = require('express-async-wrap');
 
 const UserCtrl = require('../controllers/UserCtrl');
 const AttendCtrl = require('../controllers/AttendCtrl');
+const NoticeCtrl = require('../controllers/NoticeCtrl');
 
 router.route('/register')
 	.post(wrap(UserCtrl.register)); // 회원가입
@@ -18,7 +19,9 @@ router.route('/cyberMoney')
 	.put(wrap(UserCtrl.chargeCyberMoney));    // 사이버 머니 충전하기
 
 router.route('/attend/make')
-	.post(wrap(AttendCtrl.makeNewAttend));    // 새 공지 생성
+	.post(wrap(AttendCtrl.makeNewAttend));    // 새 출석 생성
 
+router.route('/notice/make')
+	.post(wrap(NoticeCtrl.makeNewNotice));    // 새 공지 생성
 
 module.exports = router;
