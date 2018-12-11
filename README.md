@@ -188,3 +188,29 @@
     "time": "2018-12-10T14:43:04.562Z"
 }
 ```
+*****
+### 유저 출석
+- PUT http://1.201.139.81:5900/users/attend/read
+- http header: Content-Type=application/json
+```$xslt
+// http body
+{
+	"user": {
+		"email": "gogomin0416@gmail.com",
+		"uname": "gogo",
+		"pwd": "123",
+		"cyber_money": 0
+	},
+	"_id":4 // attend의 _id값
+}
+```
+- 성공했으면 code값 200
+- 주의: 이미 출석했으면 오류처리
+```
+// http response 결과.
+{
+    "message": "이미 출석했습니다.",
+    "code": 304,                    // 304 코드지만 HTTP status 코드는 500
+    "time": "2018-12-11T10:21:36.833Z"
+}
+```

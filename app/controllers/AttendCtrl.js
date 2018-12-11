@@ -47,3 +47,24 @@ exports.searchAttendByClubName = async(req, res, next) => {
 		"data": rows
 	});
 };
+
+exports.readAttend = async function(req, res, next) {
+	let [rows, fields] = [null, null];
+	let dataObj = {
+		user: req.body.user,
+		_id: req.body._id
+	};
+
+	try {
+		[rows, fields] = await AttendTable.readAttend(dataObj);
+	} catch (err) {
+		logger.error("readAttend 실패: %o", err); throw err;
+	}
+
+	res.json({
+		"message": "출석 완료.",
+		"code": 200,
+		"time": new Date(),
+		"data": rows
+	});
+};

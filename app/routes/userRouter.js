@@ -21,6 +21,9 @@ router.route('/cyberMoney')
 router.route('/attend/make')
 	.post(wrap(AttendCtrl.makeNewAttend));    // 새 출석 생성
 
+router.route('/attend/read')
+	.put(wrap(AttendCtrl.readAttend));          // 유저가 공지 읽기
+
 router.route('/notice/make')
 	.post(wrap(NoticeCtrl.makeNewNotice));    // 새 공지 생성
 
