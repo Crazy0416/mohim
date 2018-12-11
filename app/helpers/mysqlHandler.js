@@ -76,6 +76,7 @@ async function init() {
 		deadline DATE NOT NULL,
 		create_on DATETIME NOT NULL DEFAULT NOW(),
 		code VARCHAR(20) NOT NULL,
+		unread_email_list VARCHAR(300) DEFAULT NULL,
 		PRIMARY KEY (_id),
 		FOREIGN KEY (c_club_name) REFERENCES Club (club_name)
 	)CHARACTER SET utf8 COLLATE utf8_general_ci;`;
