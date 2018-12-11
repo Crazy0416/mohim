@@ -12,6 +12,8 @@ module.exports = {
 	selectAttendListByClubNameSQL: `SELECT * FROM Attend WHERE c_club_name=?`,
 	selectClubMembersByClubNameSQL: `SELECT u_email FROM ClubMembers WHERE c_club_name=?`,
 	userReadAttendByAttendIdSQL: `UPDATE Attend SET unread_email_list=? WHERE _id=?`,
+	finePenaltyFromUserCyberMoneySQL: `UPDATE User SET cyber_money = cyber_money - ? WHERE email=?`,
+	addPenaltySQL: `UPDATE Club SET penalty = penalty + ? WHERE club_name = ?`,
 	makeNewAttend: async function(dataObj) {
 		if(!(dataObj && dataObj.user instanceof Object && dataObj.user.email && dataObj.title && dataObj.clubName && dataObj.deadline
 		&& moment(dataObj.deadline).isValid() && dataObj.code)) {
@@ -153,6 +155,81 @@ module.exports = {
 			await connection.rollback(); await connection.release(); throw err;
 		}
 		logger.debug("readAttend 업데이트 결과: %o", rows);
+
+		await connection.commit();
+		await connection.release();
+
+		return [rows, fields];
+	},
+	finePenaltytoUnread: async function(dataObj) {
+		if(!(dataObj && dataObj.user instanceof Object && dataObj.user.email && dataObj._id && dataObj.clubName)) {
+			let err = new Error("잘못된 입력입니다."); err.myMessage="잘못된 입력입니다.";
+			logger.error("readAttend: 잘못된 입력입니다. 입력값: %o", dataObj);  throw err;
+		}
+
+		let [rows,fields] = [null, null];
+
+		let connection = await poolCon.getConnection();
+		await connection.beginTransaction();
+
+		try {
+			[rows,fields] = await connection.execute(this.selectClubByClubNameEmailSQL, [dataObj.clubName, dataObj.user.email]);
+		} catch (err) {
+			err.myMessage = "서버 오류. 출석 벌금 부과 실패";
+			await connection.rollback(); await connection.release(); throw err;
+		}
+		logger.debug("finePenaltytoUnread 클럽 검색 결과: %o", rows);
+
+		if(rows.length === 0) {
+			let err = new Error("클럽이 없거나 권한이 없습니다.");
+			await connection.rollback(); await connection.release(); throw err;
+		}
+		try {
+			[rows,fields] = await connection.execute(this.selectAttendInfoByIdSQL, [dataObj._id]);
+		} catch (err) {
+			err.myMessage = "서버 오류. 출석 벌금 부과 실패";
+			await connection.rollback(); await connection.release(); throw err;
+		}
+		logger.debug("finePenaltytoUnread Attend 검색 결과: %o", rows);
+
+		if(!rows[0]) {
+			let err = new Error("존재하지 않는 출석입니다.");
+			await connection.rollback(); await connection.release(); throw err;
+		} else if (rows[0].unread_email_list === null) {
+			return [null, 304];
+		}
+
+
+		let userEmailList = (rows[0] && rows[0].unread_email_list) ? rows[0].unread_email_list.split("||") : [];
+		let penaltyAmount = 0;
+
+		for(let i = 0; i < userEmailList.length; i++) {
+			let uEmail = userEmailList[i];
+			try {
+				[rows,fields] = await connection.execute(this.finePenaltyFromUserCyberMoneySQL, [1000, uEmail]);
+			} catch (err) {
+				err.myMessage = "서버 오류. 출석 벌금 부과 실패";
+				await connection.rollback(); await connection.release(); throw err;
+			}
+			penaltyAmount += 1000;
+			logger.debug("finePenaltytoUnread 유저 벌금부과 업데이트 결과 검색 결과: %o", rows);
+		}
+
+		try {
+			[rows,fields] = await connection.execute(this.addPenaltySQL, [penaltyAmount, dataObj.clubName]);
+		} catch (err) {
+			err.myMessage = "서버 오류. 출석 벌금 부과 실패";
+			await connection.rollback(); await connection.release(); throw err;
+		}
+		logger.debug("searchAttendByClubName 클럽 벌금 추가 결과: %o", rows);
+
+		try {
+			[rows,fields] = await connection.execute(this.userReadAttendByAttendIdSQL, [null, dataObj._id]);
+		} catch (err) {
+			err.myMessage = "서버 오류. 출석 벌금 부과 실패";
+			await connection.rollback(); await connection.release(); throw err;
+		}
+		logger.debug("searchAttendByClubName 읽지않은 유저 목록 삭제 결과: %o", rows);
 
 		await connection.commit();
 		await connection.release();

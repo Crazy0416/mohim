@@ -214,3 +214,39 @@
     "time": "2018-12-11T10:21:36.833Z"
 }
 ```
+*****
+### 출석 벌금 부과
+- PUT http://1.201.139.81:5900/users/attend/fine
+- http header: Content-Type=application/json
+```$xslt
+// http body
+{
+	"user": {   // 클럽 방장이어야 함.
+        "email": "gogomin0416@gmail.com",
+        "uname": "gogo",
+        "pwd": "123",
+        "cyber_money": 0
+    },
+    "clubName": "클럽1",
+    "_id": 1        // attend의 _id값
+}
+```
+- 성공했으면 code값 200. message는 "벌금 부과 완료"
+- 모두 출석했어도 성공으로 함. code값 200. 하지만 message가 다르다. "이미 모두 출석하였습니다."
+```
+// http response 결과.
+{
+    "message": "이미 모두 출석하였습니다.",
+    "code": 200,
+    "time": "2018-12-11T13:27:14.344Z"
+}
+```
+- 유저가 방장이 아니라면 오류처리.
+```
+// http response 결과.
+{
+    "message": "클럽이 없거나 권한이 없습니다.",
+    "code": 500,
+    "time": "2018-12-11T13:33:43.447Z"
+}
+```

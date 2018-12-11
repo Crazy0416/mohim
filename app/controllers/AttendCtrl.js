@@ -48,7 +48,7 @@ exports.searchAttendByClubName = async(req, res, next) => {
 	});
 };
 
-exports.readAttend = async function(req, res, next) {
+exports.readAttend = async (req, res, next) => {
 	let [rows, fields] = [null, null];
 	let dataObj = {
 		user: req.body.user,
@@ -66,5 +66,35 @@ exports.readAttend = async function(req, res, next) {
 		"code": 200,
 		"time": new Date(),
 		"data": rows
+	});
+};
+
+exports.finePenaltytoUnread = async (req, res, next) => {
+	let [rows, fields] = [null, null];
+	let dataObj = {
+		user: req.body.user,
+		clubName: req.body.clubName,
+		_id: req.body._id
+	};
+
+	try {
+		[rows, fields] = await AttendTable.finePenaltytoUnread(dataObj);
+	} catch (err) {
+		logger.error("finePenaltytoUnread 실패: %o", err); throw err;
+	}
+
+	// TODO: 코드가 지저분 하니 나중에 여유있을 때 바꿀것
+	if(fields === 304) {
+		res.json({
+			"message": "이미 모두 출석하였습니다.",
+			"code": 200,
+			"time": new Date()
+		});
+		return;
+	}
+	res.json({
+		"message": "벌금 부과 완료.",
+		"code": 200,
+		"time": new Date()
 	});
 };

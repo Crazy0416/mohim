@@ -19,10 +19,13 @@ router.route('/cyberMoney')
 	.put(wrap(UserCtrl.chargeCyberMoney));    // 사이버 머니 충전하기
 
 router.route('/attend/make')
-	.post(wrap(AttendCtrl.makeNewAttend));    // 새 출석 생성
+	.post(wrap(AttendCtrl.makeNewAttend));    // 방장이 새 출석 생성
 
 router.route('/attend/read')
 	.put(wrap(AttendCtrl.readAttend));          // 유저가 공지 읽기
+
+router.route('/attend/fine')
+	.put(wrap(AttendCtrl.finePenaltytoUnread));          // 방장 유저가 클럽 출석 벌금 부과
 
 router.route('/notice/make')
 	.post(wrap(NoticeCtrl.makeNewNotice));    // 새 공지 생성
