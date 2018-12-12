@@ -104,6 +104,10 @@ module.exports = {
 			await connection.rollback(); await connection.release(); throw err;
 		}
 		logger.debug("사이버 머니 충전 결과: %o", rows);
+		if(rows.affectedRows === 0) {
+			let err = new Error("존재하지 않는 유저입니다.");
+			await connection.rollback(); await connection.release(); throw err;
+		}
 
 		await connection.commit();
 		await connection.release();
