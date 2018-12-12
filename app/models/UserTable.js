@@ -55,7 +55,7 @@ module.exports = {
 
 		if(rows.length !== undefined && rows.length <= 0) {
 			await connection.rollback(); await connection.release();
-			let err = new Error("계정을 찾을 수 없습니다."); err.code =400;
+			let err = new Error("계정을 찾을 수 없습니다."); err.code = 400; err.status = 400;
 			throw err;
 		}
 
