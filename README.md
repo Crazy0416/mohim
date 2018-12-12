@@ -284,3 +284,47 @@
     ]
 }
 ```
+*****
+### 패널티 로그 검색
+- PUT http://1.201.139.81:5900/log/penalty/search
+- http header: Content-Type=application/json
+```$xslt
+// http body 
+// 이메일로 검색할 때
+{
+	"user": {
+		"email": "kimminho@naver.com"
+	}
+}
+```
+```
+// http body
+// 클럽 이름으로 검색할 때
+{
+	"clubName": "클럽1"
+}
+```
+- 응답
+```
+{
+    "message": "로그 검색 완료.",
+    "code": 200,
+    "time": "2018-12-12T06:39:47.149Z",
+    "data": [
+        {
+            "_id": 1,
+            "c_club_name": "클럽1",
+            "u_email": "kimminho@naver.com",
+            "create_on": "2018-12-11T15:12:00.000Z",
+            "penalty": 1000
+        },
+        {
+            "_id": 5,
+            "c_club_name": "클럽1",
+            "u_email": "kimminho@naver.com",
+            "create_on": "2018-12-11T15:12:00.000Z",
+            "penalty": 1000
+        }
+    ]
+}
+```

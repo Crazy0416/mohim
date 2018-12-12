@@ -13,7 +13,7 @@ const clubRouter = require('./app/routes/clubRouter');
 const clubMembersRouter = require('./app/routes/clubMembersRouter');
 const attendRouter = require('./app/routes/attendRouter');
 const noticeRouter = require('./app/routes/noticeRouter');
-
+const penaltyLogRouter = require('./app/routes/penaltyLogRouter');
 
 const app = express();
 
@@ -41,6 +41,7 @@ app.use('/clubs', clubRouter);
 app.use('/clubmembers', clubMembersRouter);
 app.use('/attend', attendRouter);
 app.use('/notice', noticeRouter);
+app.use('/log', penaltyLogRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
