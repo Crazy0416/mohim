@@ -50,6 +50,8 @@ module.exports = {
 		let emailList = [];
 		debugger;
 		for(let i = 0; i < rows.length; i++) {
+			if(rows[i].u_email === dataObj.user.email)
+				continue;
 			emailList.push(rows[i].u_email);
 		}
 
