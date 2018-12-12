@@ -7,7 +7,7 @@ const moment = require('moment');
 module.exports = {
 	selectClubByClubNameEmail: `SELECT club_name FROM Club Where club_name=? AND u_email=?`,
 	createNewAttendSQL: `INSERT INTO Notice (c_club_name, title, content, create_on) VALUES (?,?,?,?)`,
-	selectNoticeInfoByClubName: `SELECT * FROM Notice WHERE c_club_name=?`,
+	selectNoticeInfoByClubName: `SELECT * FROM Notice WHERE c_club_name=? ORDER BY create_on DESC`,
 	selectNoticeInfoById: `SELECT * FROM Notice WHERE _id=?`,
 	makeNewNotice: async function(dataObj) {
 		if(!(dataObj && dataObj.user instanceof Object && dataObj.user.email && dataObj.title && dataObj.clubName && dataObj.content)) {

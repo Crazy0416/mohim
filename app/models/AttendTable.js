@@ -9,7 +9,7 @@ module.exports = {
 	Values (?, ?, ?, ?, ?, ?)`,
 	selectClubByClubNameEmailSQL: `SELECT club_name FROM Club Where club_name=? AND u_email=?`,
 	selectAttendInfoByIdSQL: `SELECT * FROM Attend WHERE _id=?`,
-	selectAttendListByClubNameSQL: `SELECT * FROM Attend WHERE c_club_name=?`,
+	selectAttendListByClubNameSQL: `SELECT * FROM Attend WHERE c_club_name=? ORDER BY create_on DESC`,
 	selectClubMembersByClubNameSQL: `SELECT u_email FROM ClubMembers WHERE c_club_name=?`,
 	userReadAttendByAttendIdSQL: `UPDATE Attend SET unread_email_list=? WHERE _id=?`,
 	finePenaltyFromUserCyberMoneySQL: `UPDATE User SET cyber_money = cyber_money - ? WHERE email=?`,
